@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/despinoz/waste-lookup/issues"
   },
-  "homepage": "https://github.com/despinoz/waste-lookup#readme"
+  "homepage": "https://github.com/despinoz/waste-lookup#readme",
+  "devDependencies": {
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1"
+  }
 }
