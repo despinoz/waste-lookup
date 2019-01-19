@@ -18,6 +18,10 @@
   },
   "homepage": "https://github.com/despinoz/waste-lookup#readme",
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1"
   }
