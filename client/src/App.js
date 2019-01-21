@@ -42,9 +42,15 @@ class App extends Component {
   }
 
   handleChange(event) {
+    const { searchResults, query } = this.state;
     this.setState({
       query: event.target.value
     });
+    if (searchResults.length > 0 && query.length === 1) {
+      this.setState({
+        searchResults: []
+      });
+    }
   }
 
   render() {
