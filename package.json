@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack -d"
+    "build": "webpack -d",
+    "start": "json-server --watch ./data/db.json --routes ./data/routes.json --static ./client/dist"
   },
   "repository": {
     "type": "git",
