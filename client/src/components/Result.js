@@ -2,21 +2,24 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 class Result extends Component {
-  constructor() {
-    super();
+  htmlDecode(input) {
+    const e = document.createElement('div');
+    e.innerHTML = input;
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
   }
 
   render() {
     const { result, toggleFavorite } = this.props;
     return (
-      <div>
-        <div onClick={() => toggleFavorite(result)}>
+      <ResultList>
+        <a onClick={() => toggleFavorite(result)}>
           {JSON.stringify(result.favorite)}
-        </div>
-        <div>{result.title}</div>
-        <div>{result.body}</div>
-        {/* <div>{data.body.replace(/&lt;/g, '<').replace(/&gt;/g, '>\n')}</div> */}
-      </div>
+        </a>
+        <h6>{result.title}</h6>
+        <span
+          dangerouslySetInnerHTML={{ __html: this.htmlDecode(result.body) }}
+        />
+      </ResultList>
     );
   }
 }
