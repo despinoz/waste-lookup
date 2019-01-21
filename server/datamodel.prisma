@@ -1,4 +1,8 @@
-type User {
+type Waste {
   id: ID! @unique
-  name: String!
+  body: String!
+  category: String!
+  title: String!
+  keywords: String!
+  favourite: Boolean!
 }

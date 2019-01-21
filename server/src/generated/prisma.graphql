@@ -1,7 +1,7 @@
 # source: https://us1.prisma.sh/diego-espinoza-49c2d4/waste-lookup/dev
-# timestamp: Sun Jan 20 2019 23:55:39 GMT-0500 (-05)
+# timestamp: Mon Jan 21 2019 00:17:14 GMT-0500 (-05)
 
-type AggregateUser {
+type AggregateWaste {
   count: Int!
 }
 
@@ -17,12 +17,12 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createUser(data: UserCreateInput!): User!
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  deleteUser(where: UserWhereUniqueInput!): User
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  createWaste(data: WasteCreateInput!): Waste!
+  updateWaste(data: WasteUpdateInput!, where: WasteWhereUniqueInput!): Waste
+  deleteWaste(where: WasteWhereUniqueInput!): Waste
+  upsertWaste(where: WasteWhereUniqueInput!, create: WasteCreateInput!, update: WasteUpdateInput!): Waste!
+  updateManyWastes(data: WasteUpdateManyMutationInput!, where: WasteWhereInput): BatchPayload!
+  deleteManyWastes(where: WasteWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -53,9 +53,9 @@ type PageInfo {
 }
 
 type Query {
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  user(where: UserWhereUniqueInput!): User
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  wastes(where: WasteWhereInput, orderBy: WasteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Waste]!
+  waste(where: WasteWhereUniqueInput!): Waste
+  wastesConnection(where: WasteWhereInput, orderBy: WasteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WasteConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -65,69 +65,84 @@ type Query {
 }
 
 type Subscription {
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  waste(where: WasteSubscriptionWhereInput): WasteSubscriptionPayload
 }
 
-type User implements Node {
+type Waste implements Node {
   id: ID!
-  name: String!
+  body: String!
+  category: String!
+  title: String!
+  keywords: String!
 }
 
 """A connection to a list of items."""
-type UserConnection {
+type WasteConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [UserEdge]!
-  aggregate: AggregateUser!
+  edges: [WasteEdge]!
+  aggregate: AggregateWaste!
 }
 
-input UserCreateInput {
-  name: String!
+input WasteCreateInput {
+  body: String!
+  category: String!
+  title: String!
+  keywords: String!
 }
 
 """An edge in a connection."""
-type UserEdge {
+type WasteEdge {
   """The item at the end of the edge."""
-  node: User!
+  node: Waste!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum UserOrderByInput {
+enum WasteOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
+  body_ASC
+  body_DESC
+  category_ASC
+  category_DESC
+  title_ASC
+  title_DESC
+  keywords_ASC
+  keywords_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
 }
 
-type UserPreviousValues {
+type WastePreviousValues {
   id: ID!
-  name: String!
+  body: String!
+  category: String!
+  title: String!
+  keywords: String!
 }
 
-type UserSubscriptionPayload {
+type WasteSubscriptionPayload {
   mutation: MutationType!
-  node: User
+  node: Waste
   updatedFields: [String!]
-  previousValues: UserPreviousValues
+  previousValues: WastePreviousValues
 }
 
-input UserSubscriptionWhereInput {
+input WasteSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [UserSubscriptionWhereInput!]
+  AND: [WasteSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [UserSubscriptionWhereInput!]
+  OR: [WasteSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [UserSubscriptionWhereInput!]
+  NOT: [WasteSubscriptionWhereInput!]
 
   """
   The subscription event gets dispatched when it's listed in mutation_in
@@ -148,26 +163,32 @@ input UserSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: UserWhereInput
+  node: WasteWhereInput
 }
 
-input UserUpdateInput {
-  name: String
+input WasteUpdateInput {
+  body: String
+  category: String
+  title: String
+  keywords: String
 }
 
-input UserUpdateManyMutationInput {
-  name: String
+input WasteUpdateManyMutationInput {
+  body: String
+  category: String
+  title: String
+  keywords: String
 }
 
-input UserWhereInput {
+input WasteWhereInput {
   """Logical AND on all given filters."""
-  AND: [UserWhereInput!]
+  AND: [WasteWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [UserWhereInput!]
+  OR: [WasteWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [UserWhereInput!]
+  NOT: [WasteWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -208,48 +229,168 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  name: String
+  body: String
 
   """All values that are not equal to given value."""
-  name_not: String
+  body_not: String
 
   """All values that are contained in given list."""
-  name_in: [String!]
+  body_in: [String!]
 
   """All values that are not contained in given list."""
-  name_not_in: [String!]
+  body_not_in: [String!]
 
   """All values less than the given value."""
-  name_lt: String
+  body_lt: String
 
   """All values less than or equal the given value."""
-  name_lte: String
+  body_lte: String
 
   """All values greater than the given value."""
-  name_gt: String
+  body_gt: String
 
   """All values greater than or equal the given value."""
-  name_gte: String
+  body_gte: String
 
   """All values containing the given string."""
-  name_contains: String
+  body_contains: String
 
   """All values not containing the given string."""
-  name_not_contains: String
+  body_not_contains: String
 
   """All values starting with the given string."""
-  name_starts_with: String
+  body_starts_with: String
 
   """All values not starting with the given string."""
-  name_not_starts_with: String
+  body_not_starts_with: String
 
   """All values ending with the given string."""
-  name_ends_with: String
+  body_ends_with: String
 
   """All values not ending with the given string."""
-  name_not_ends_with: String
+  body_not_ends_with: String
+  category: String
+
+  """All values that are not equal to given value."""
+  category_not: String
+
+  """All values that are contained in given list."""
+  category_in: [String!]
+
+  """All values that are not contained in given list."""
+  category_not_in: [String!]
+
+  """All values less than the given value."""
+  category_lt: String
+
+  """All values less than or equal the given value."""
+  category_lte: String
+
+  """All values greater than the given value."""
+  category_gt: String
+
+  """All values greater than or equal the given value."""
+  category_gte: String
+
+  """All values containing the given string."""
+  category_contains: String
+
+  """All values not containing the given string."""
+  category_not_contains: String
+
+  """All values starting with the given string."""
+  category_starts_with: String
+
+  """All values not starting with the given string."""
+  category_not_starts_with: String
+
+  """All values ending with the given string."""
+  category_ends_with: String
+
+  """All values not ending with the given string."""
+  category_not_ends_with: String
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  keywords: String
+
+  """All values that are not equal to given value."""
+  keywords_not: String
+
+  """All values that are contained in given list."""
+  keywords_in: [String!]
+
+  """All values that are not contained in given list."""
+  keywords_not_in: [String!]
+
+  """All values less than the given value."""
+  keywords_lt: String
+
+  """All values less than or equal the given value."""
+  keywords_lte: String
+
+  """All values greater than the given value."""
+  keywords_gt: String
+
+  """All values greater than or equal the given value."""
+  keywords_gte: String
+
+  """All values containing the given string."""
+  keywords_contains: String
+
+  """All values not containing the given string."""
+  keywords_not_contains: String
+
+  """All values starting with the given string."""
+  keywords_starts_with: String
+
+  """All values not starting with the given string."""
+  keywords_not_starts_with: String
+
+  """All values ending with the given string."""
+  keywords_ends_with: String
+
+  """All values not ending with the given string."""
+  keywords_not_ends_with: String
 }
 
-input UserWhereUniqueInput {
+input WasteWhereUniqueInput {
   id: ID
 }
