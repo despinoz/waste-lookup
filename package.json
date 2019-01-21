@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "build-dev": "webpack -d --w",
-    "start-dev": "json-server --watch ./data/db.json --routes ./data/routes.json --static ./client/dist",
-    "start": "json-server ./data/db.json --routes ./data/routes.json --static ./client/dist"
+    "start-dev": "nodemon server.js",
+    "start": "webpack & node server.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,8 @@
     "webpack-cli": "^3.2.1"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.4",
     "json-server": "^0.14.2"
   }
 }
