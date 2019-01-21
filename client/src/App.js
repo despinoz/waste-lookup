@@ -7,13 +7,33 @@ class App extends Component {
     super();
     this.state = {
       query: '',
-      searchResults: []
+      searchResults: [],
+      favourites: []
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleFavorite = this.toggleFavorite.bind(this);
     this.search = this.search.bind(this);
+  }
+
+  componentDidMount() {
+    this.foundFavourites();
+  }
+
+  foundFavourites() {
+    axios
+      .get(
+        'https://waste-lookup-database.herokuapp.com/api/data/_search?favorite=true'
+      )
+      .then(({ data }) => {
+        this.setState({
+          favourites: data
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   toggleFavorite(result) {
@@ -28,6 +48,7 @@ class App extends Component {
       })
       .then(() => {
         this.search();
+        this.foundFavourites();
       })
       .catch(error => {
         console.log(error);
@@ -83,6 +104,14 @@ class App extends Component {
         <button onClick={this.handleClick}>Search</button>
         <div>
           {this.state.searchResults.map(data => (
+            <div key={data.id}>
+              <Result result={data} toggleFavorite={this.toggleFavorite} />
+            </div>
+          ))}
+        </div>
+        <h2>Favourites</h2>
+        <div>
+          {this.state.favourites.map(data => (
             <div key={data.id}>
               <Result result={data} toggleFavorite={this.toggleFavorite} />
             </div>
