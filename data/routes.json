@@ -1,0 +1,4 @@
+{
+  "/api/data/_search?keywords=:searchstring": "/data/?keywords_like=:searchstring",
+  "/api/data/_search?favourite=:searchstring": "/data/?favourite_like=:searchstring"
+}
