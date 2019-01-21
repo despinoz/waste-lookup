@@ -12,6 +12,26 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.toggleFavorite = this.toggleFavorite.bind(this);
+    this.search = this.search.bind(this);
+  }
+
+  toggleFavorite(result) {
+    axios
+      .put(`https://waste-lookup-database.herokuapp.com/data/${result.id}`, {
+        id: result.id,
+        body: result.body,
+        category: result.category,
+        favorite: !result.favorite,
+        keywords: result.keywords,
+        title: result.title
+      })
+      .then(() => {
+        this.search();
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   handleClick() {
@@ -64,7 +84,7 @@ class App extends Component {
         <div>
           {this.state.searchResults.map(data => (
             <div key={data.id}>
-              <Result result={data} />
+              <Result result={data} toggleFavorite={this.toggleFavorite} />
             </div>
           ))}
         </div>
